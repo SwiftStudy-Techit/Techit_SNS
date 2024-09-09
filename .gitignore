@@ -6,6 +6,10 @@
 **/node_modules/*
 **/.firebaserc
 
+
+# Ignore all instances of GoogleService-Info.plist in the project
+**/GoogleService-Info.plist
+
 ### Firebase Patch ###
 .runtimeconfig.json
 .firebase/
