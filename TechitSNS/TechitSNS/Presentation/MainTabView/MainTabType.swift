@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+
+//메인 탭 타입 정의를 위한 enum
+enum MainTabType {
+    case home       //홈
+    case post       //글 작성
+    case profile    // 프로필
+}
