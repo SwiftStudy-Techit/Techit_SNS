@@ -1,0 +1,30 @@
+# Created by https://www.toptal.com/developers/gitignore/api/firebase,xcode
+# Edit at https://www.toptal.com/developers/gitignore?templates=firebase,xcode
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
+
+### Xcode ###
+## User settings
+xcuserdata/
+
+## Xcode 8 and earlier
+*.xcscmblueprint
+*.xccheckout
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+.DS_Store
+# End of https://www.toptal.com/developers/gitignore/api/firebase,xcode
