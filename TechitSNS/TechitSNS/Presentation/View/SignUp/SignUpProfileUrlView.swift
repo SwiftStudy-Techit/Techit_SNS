@@ -9,6 +9,7 @@ import SwiftUI
 import PhotosUI
 
 struct SignUpProfileUrlView: View {
+    let name: String // 전달된 이름
     @State private var profileUrl = ""
     
     @State private var selectedImage: PhotosPickerItem? // 선택된 사진
@@ -46,16 +47,16 @@ struct SignUpProfileUrlView: View {
                     
                     Button("사진 추가") {
                         // 서버에 업로드하는 로직
+                        // SignUpCompletedView로 이동
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: false)
                     .padding(.bottom, -15)
                     
-                    
                     // 다음 버튼(네비게이션으로 이동)
-                    NavigationLink(destination: SignUpCompletedView()) {
+                    NavigationLink(destination: SignUpCompletedView(name: name, profileImage: profileImage!)) {
                         Text("건너뛰기")
                     }
-                    .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9, isDisabled: false)
                 }
                 .applyGradientBackground()
                 .navigationTitle("프로필 사진 추가")
@@ -65,5 +66,5 @@ struct SignUpProfileUrlView: View {
 }
 
 #Preview {
-    SignUpProfileUrlView()
+    SignUpProfileUrlView(name: "sample")
 }

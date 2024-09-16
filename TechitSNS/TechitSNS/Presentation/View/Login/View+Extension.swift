@@ -24,18 +24,24 @@ extension View {
     }
 }
 
-// 로그인 버튼 스타일
+// 버튼 스타일
 extension View { // if문 조건을 Bool로 빼서 처리
-    func loginButtonStyle(isFilled: Bool, width: CGFloat) -> some View {
+    func loginButtonStyle(isFilled: Bool, width: CGFloat, isDisabled: Bool) -> some View {
         self
             .frame(width: width)
             .padding(.vertical, 15) // 위아래 패딩
-            .background(isFilled ? .blue : .white)
-            .foregroundStyle(isFilled ? .white : .blue)
+            .background(
+                // isDisabled에 따라 배경색을 변경
+                isDisabled ? .gray : (isFilled ? .blue : .white)
+            )
+            .foregroundStyle(
+                isDisabled ? .white : (isFilled ? .white : .blue)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(.blue, lineWidth: 2)
+                    .stroke(isDisabled ? .gray : .blue, lineWidth: 2)
             }
             .clipShape(RoundedRectangle(cornerRadius: 15))
+            .disabled(isDisabled) // 실제로 isDisabled 조건을 통해 버튼 비활성화 적용
     }
 }

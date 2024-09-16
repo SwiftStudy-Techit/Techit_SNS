@@ -20,12 +20,13 @@ struct SignUpEmailView: View {
                     
                     TextField("이메일을 입력해 주세요.", text: $email)
                         .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                        .keyboardType(.emailAddress)
                     
                     // 다음 버튼(네비게이션으로 이동)
                     NavigationLink(destination: SignUpIDView()) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: email.isEmpty)
                     
                     Spacer()
                 }

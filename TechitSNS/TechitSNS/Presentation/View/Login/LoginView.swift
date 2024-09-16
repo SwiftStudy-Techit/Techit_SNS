@@ -27,17 +27,18 @@ struct LoginView: View {
                     // 이메일 입력 텍스트필드
                     TextField("이메일을 입력해 주세요.", text: $email)
                         .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                        .keyboardType(.emailAddress)
                     
                     // 비밀번호 입력 텍스트필드
                     SecureField("비밀번호를 입력해 주세요.", text: $password)
                         .loginSecureFieldStyle(width: geometry.size.width * 0.9, height: 50)
                         .padding(.bottom, 20)
                     
-                    // 로그인 확인 버튼
-                    NavigationLink(destination: MainTabView()) {
+                    // 로그인 확인 버튼(로그인 성공 시 메인탭뷰로 이동)
+                    NavigationLink(destination: MainTabView().navigationBarBackButtonHidden(true)) {
                         Text("확인")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: email.isEmpty || password.isEmpty)
                     
                     Spacer()
                     
@@ -45,7 +46,7 @@ struct LoginView: View {
                     NavigationLink(destination: SignUpEmailView()) {
                         Text("새 계정 만들기")
                     }
-                    .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9, isDisabled: false)
                 }
                 .applyGradientBackground()
             }

@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct SignUpCompletedView: View {
+    let name: String // 전달된 이름
+    let profileImage: Image // 전달된 프사
+    
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
@@ -16,14 +19,24 @@ struct SignUpCompletedView: View {
                     Text("SNS")
                         .font(.custom("Copperplate", size: 80))
                         .fontWeight(.bold)
+                        .padding(.bottom, 20)
                     
-                    Text("ㅇㅇ님 SNS에 오신 것을 환영합니다!")
+                    profileImage
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: geometry.size.width * 0.5,
+                               height: geometry.size.width * 0.5)
+                        .clipShape(Circle())
                     
-                    // 로그인 확인 버튼
-                    NavigationLink(destination: MainTabView()) {
-                        Text("확인")
+                    Text("\(name) 님,\nSNS에 오신 것을 환영합니다!")
+                        .multilineTextAlignment(.center)
+                        .padding(.bottom, 20)
+                    
+                    // 회원가입 완료 버튼
+                    NavigationLink(destination: MainTabView().navigationBarBackButtonHidden(true)) {
+                        Text("완료")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: false)
                 }
                 .applyGradientBackground()
             }
@@ -32,5 +45,5 @@ struct SignUpCompletedView: View {
 }
 
 #Preview {
-    SignUpCompletedView()
+    SignUpCompletedView(name: "sample", profileImage: Image(.profile))
 }

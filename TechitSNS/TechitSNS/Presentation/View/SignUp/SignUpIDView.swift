@@ -25,7 +25,7 @@ struct SignUpIDView: View {
                     NavigationLink(destination: SignUpPasswordView()) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: id.isEmpty)
                     
                     Spacer()
                 }

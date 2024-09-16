@@ -14,15 +14,15 @@ struct SignUpNameView: View {
         NavigationStack {
             GeometryReader { geometry in
                 VStack(spacing: 30) {
-                    SecureField("이름을 입력해 주세요.", text: $name)
-                        .loginSecureFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                    TextField("이름을 입력해 주세요.", text: $name)
+                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
                         .padding(.top, 20)
                     
                     // 다음 버튼(네비게이션으로 이동)
-                    NavigationLink(destination: SignUpProfileUrlView()) {
+                    NavigationLink(destination: SignUpProfileUrlView(name: name)) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: name.isEmpty)
                     
                     Spacer()
                 }
