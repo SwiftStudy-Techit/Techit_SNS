@@ -33,6 +33,7 @@ struct SignUpEmailView: View {
                 .applyGradientBackground()
                 .navigationTitle("이메일 주소 입력")
                 .navigationBarTitleDisplayMode(.large)
+                .customBackButton()
             }
         }
     }

@@ -15,8 +15,8 @@ extension TextField {
             .textInputAutocapitalization(.never) // 첫글자 자동으로 대문자로 바꾸는 기능 비활성화
             .frame(width: width, height: height)
             .background {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.white)
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundStyle(.windowBackground)
                     .frame(width: width, height: height)
                     .shadow(radius: 1)
             }
@@ -31,8 +31,8 @@ extension SecureField {
             .textInputAutocapitalization(.never) // 첫글자 자동으로 대문자로 바꾸는 기능 비활성화
             .frame(width: width, height: height)
             .background {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.white)
+                RoundedRectangle(cornerRadius: 15)
+                    .foregroundStyle(.windowBackground)
                     .frame(width: width, height: height)
                     .shadow(radius: 1)
             }

@@ -39,6 +39,7 @@ struct SignUpCompletedView: View {
                     .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: false)
                 }
                 .applyGradientBackground()
+                .navigationBarBackButtonHidden(true)
             }
         }
     }

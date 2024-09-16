@@ -57,9 +57,11 @@ struct SignUpProfileUrlView: View {
                         Text("건너뛰기")
                     }
                     .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9, isDisabled: false)
+                    .padding(.bottom, 20)
                 }
                 .applyGradientBackground()
                 .navigationTitle("프로필 사진 추가")
+                .customBackButton()
             }
         }
     }

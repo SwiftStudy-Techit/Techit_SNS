@@ -28,6 +28,7 @@ struct SignUpNameView: View {
                 }
                 .applyGradientBackground()
                 .navigationTitle("이름 입력")
+                .customBackButton()
             }
         }
     }

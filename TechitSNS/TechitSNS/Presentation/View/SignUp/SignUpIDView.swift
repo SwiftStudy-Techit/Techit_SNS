@@ -31,6 +31,7 @@ struct SignUpIDView: View {
                 }
                 .applyGradientBackground()
                 .navigationTitle("ID 만들기")
+                .customBackButton()
             }
         }
     }

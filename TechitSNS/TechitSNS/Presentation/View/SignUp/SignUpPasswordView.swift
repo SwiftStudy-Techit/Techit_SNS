@@ -25,12 +25,13 @@ struct SignUpPasswordView: View {
                     NavigationLink(destination: SignUpNameView()) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: password.isEmpty)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: password.isEmpty || password.count < 5)
                     
                     Spacer()
                 }
                 .applyGradientBackground()
                 .navigationTitle("비밀번호 만들기")
+                .customBackButton()
             }
         }
     }

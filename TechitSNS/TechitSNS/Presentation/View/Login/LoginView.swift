@@ -47,6 +47,7 @@ struct LoginView: View {
                         Text("새 계정 만들기")
                     }
                     .loginButtonStyle(isFilled: false, width: geometry.size.width * 0.9, isDisabled: false)
+                    .padding(.bottom, 20)
                 }
                 .applyGradientBackground()
             }
