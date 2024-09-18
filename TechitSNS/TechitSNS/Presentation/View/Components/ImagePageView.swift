@@ -8,11 +8,21 @@
 import SwiftUI
 
 struct ImagePageView: View {
+    let selectedImages: [UIImage]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        TabView {
+            ForEach(selectedImages, id: \.self) { image in
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(1, contentMode: .fill)
+                    .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
+                    
+            }
+        }
+        .tabViewStyle(PageTabViewStyle())
     }
 }
 
 #Preview {
-    ImagePageView()
+    ImagePageView(selectedImages: [])
 }
