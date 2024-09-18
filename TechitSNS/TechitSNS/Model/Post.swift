@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+
+struct Post: Codable {
+    var postId: String = UUID().uuidString
+    var imagesUrl: [String] = []
+    var date: Date = Date()
+    var text: String
+    var writerUid: String = ""
+    var writerProfileUrl: String = ""
+    var writerName: String = "동경"
+}
