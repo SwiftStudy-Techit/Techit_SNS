@@ -31,9 +31,12 @@ class LoginViewModel {
             switch error.code {
             case AuthErrorCode.wrongPassword.rawValue:
                 errorMessage = "비밀번호 오류"
-
+                
             case AuthErrorCode.userNotFound.rawValue:
                 errorMessage = "계정을 찾을 수 없음"
+                
+            case AuthErrorCode.invalidEmail.rawValue:
+                errorMessage = "올바르지 않은 이메일 형식"
                 
             default:
                 errorMessage = error.localizedDescription

@@ -12,11 +12,12 @@ struct LoginView: View {
     @Bindable var loginViewModel: LoginViewModel
     @State private var isShowingAlert = false // 로그인 오류 Alert
     @State private var isShowingSignUpView = false // 회원가입 화면으로 이동하는 상태 변수
+    @State private var showPassword = false // 비밀번호 보여주는 상태 변수
     
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
-                VStack(spacing: 15) {
+                VStack(spacing: 20) {
                     Spacer()
                     
                     // SNS 로고
@@ -28,20 +29,47 @@ struct LoginView: View {
                     
                     // 이메일 입력 텍스트필드
                     TextField("이메일을 입력해 주세요.", text: $loginViewModel.user.userEmail)
-                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: loginViewModel.errorMessage == "올바르지 않은 이메일 형식", text: $loginViewModel.user.userEmail)
                         .keyboardType(.emailAddress)
                     
+                    // 이메일 형식 오류 시 텍스트 표시
+                    if let errorMessage = loginViewModel.errorMessage, errorMessage == "올바르지 않은 이메일 형식" {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                            .padding(.top, -10)
+                            .font(.footnote)
+                            .frame(width: geometry.size.width * 0.85, alignment: .leading) // 왼쪽 정렬
+                    }
+                    
                     // 비밀번호 입력 텍스트필드
-                    SecureField("비밀번호를 입력해 주세요.", text: $loginViewModel.user.password)
-                        .loginSecureFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: loginViewModel.errorMessage == "비밀번호 오류")
+                    ZStack {
+                        if showPassword {
+                            TextField("비밀번호를 입력해 주세요.", text: $loginViewModel.user.password)
+                                .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: loginViewModel.errorMessage == "비밀번호 오류", showClearButton: false, text: $loginViewModel.user.password)
+                        } else {
+                            SecureField("비밀번호를 입력해 주세요.", text: $loginViewModel.user.password)
+                                .loginSecureFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: loginViewModel.errorMessage == "비밀번호 오류", text: $loginViewModel.user.password)
+                        }
+                        
+                        HStack {
+                            Spacer()
+                            Button {
+                                showPassword.toggle()
+                            } label: {
+                                Image(systemName: showPassword ? "eye" : "eye.slash")
+                                    .foregroundColor(.secondary)
+                            }
+                            .padding(.trailing, 30) // 텍스트 필드 내부 여백 조정
+                        }
+                    }
                     
                     // 비밀번호 오류 시 텍스트 표시
                     if let errorMessage = loginViewModel.errorMessage, errorMessage == "비밀번호 오류" {
                         Text(errorMessage)
                             .foregroundStyle(.red)
-                            .padding(.bottom, 20)
+                            .padding(.top, -10)
                             .font(.footnote)
-                            .frame(width: geometry.size.width * 0.9, alignment: .leading) // 왼쪽 정렬
+                            .frame(width: geometry.size.width * 0.85, alignment: .leading) // 왼쪽 정렬
                     }
                     
                     // 로그인 확인 버튼

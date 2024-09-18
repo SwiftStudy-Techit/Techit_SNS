@@ -19,7 +19,7 @@ struct SignUpIDView: View {
                         .padding(.horizontal, 15)
                     
                     TextField("ID를 입력해 주세요.", text: $signUpViewModel.user.userId)
-                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: false, text: $signUpViewModel.user.userId)
                     
                     // 다음 버튼(네비게이션으로 이동)
                     NavigationLink(destination: SignUpPasswordView(signUpViewModel: signUpViewModel)) {

@@ -14,7 +14,23 @@ import Observation
 class SignUpViewModel {
     var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     
+    var isEmailValid: Bool = true // 이메일 형식 검증 상태
+    var emailErrorMessage: String? = nil // 이메일 오류 메시지
+    
     private let db = Firestore.firestore() // Firestore 인스턴스 생성
+    
+    // 이메일 형식 검증 함수
+    func validateEmail() {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        isEmailValid = emailPredicate.evaluate(with: user.userEmail)
+        
+        if isEmailValid {
+            emailErrorMessage = nil
+        } else {
+            emailErrorMessage = "올바르지 않은 이메일 형식입니다."
+        }
+    }
     
     func signUp() async throws -> String {
         do {

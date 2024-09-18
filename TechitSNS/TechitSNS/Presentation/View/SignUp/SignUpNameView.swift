@@ -15,7 +15,7 @@ struct SignUpNameView: View {
             GeometryReader { geometry in
                 VStack(spacing: 30) {
                     TextField("이름을 입력해 주세요.", text: $signUpViewModel.user.userName)
-                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
+                        .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: false, text: $signUpViewModel.user.userName, removeSpaces: false)
                         .padding(.top, 20)
                     
                     // 다음 버튼(네비게이션으로 이동)
