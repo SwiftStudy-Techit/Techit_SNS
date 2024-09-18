@@ -24,7 +24,7 @@ extension TextField {
 }
 
 extension SecureField {
-    func loginSecureFieldStyle(width: CGFloat, height: CGFloat) -> some View {
+    func loginSecureFieldStyle(width: CGFloat, height: CGFloat, isError: Bool) -> some View {
         self
             .font(.custom("", size: 18))
             .padding()
@@ -36,5 +36,9 @@ extension SecureField {
                     .frame(width: width, height: height)
                     .shadow(radius: 1)
             }
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(isError ? .red : .clear, lineWidth: 1) // 오류 시 빨간색 테두리
+            )
     }
 }

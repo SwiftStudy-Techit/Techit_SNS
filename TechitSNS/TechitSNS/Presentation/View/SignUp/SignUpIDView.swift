@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpIDView: View {
-    @State private var id = ""
+    @Bindable var signUpViewModel: SignUpViewModel
     
     var body: some View {
         NavigationStack {
@@ -18,14 +18,14 @@ struct SignUpIDView: View {
                         .padding(.top, 20)
                         .padding(.horizontal, 15)
                     
-                    TextField("ID를 입력해 주세요.", text: $id)
+                    TextField("ID를 입력해 주세요.", text: $signUpViewModel.user.userId)
                         .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
                     
                     // 다음 버튼(네비게이션으로 이동)
-                    NavigationLink(destination: SignUpPasswordView()) {
+                    NavigationLink(destination: SignUpPasswordView(signUpViewModel: signUpViewModel)) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: id.isEmpty)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: signUpViewModel.user.userId.isEmpty)
                     
                     Spacer()
                 }
@@ -38,5 +38,5 @@ struct SignUpIDView: View {
 }
 
 #Preview {
-    SignUpIDView()
+    SignUpIDView(signUpViewModel: SignUpViewModel())
 }

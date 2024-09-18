@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct SignUpNameView: View {
-    @State private var name = ""
+    @Bindable var signUpViewModel: SignUpViewModel
     
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
                 VStack(spacing: 30) {
-                    TextField("이름을 입력해 주세요.", text: $name)
+                    TextField("이름을 입력해 주세요.", text: $signUpViewModel.user.userName)
                         .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50)
                         .padding(.top, 20)
                     
                     // 다음 버튼(네비게이션으로 이동)
-                    NavigationLink(destination: SignUpProfileUrlView(name: name)) {
+                    NavigationLink(destination: SignUpCompletedView(signUpViewModel: signUpViewModel)) {
                         Text("다음")
                     }
-                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: name.isEmpty)
+                    .loginButtonStyle(isFilled: true, width: geometry.size.width * 0.9, isDisabled: signUpViewModel.user.userName.isEmpty)
                     
                     Spacer()
                 }
@@ -35,5 +35,5 @@ struct SignUpNameView: View {
 }
 
 #Preview {
-    SignUpNameView()
+    SignUpNameView(signUpViewModel: SignUpViewModel())
 }
