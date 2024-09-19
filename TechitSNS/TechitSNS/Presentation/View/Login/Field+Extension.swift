@@ -24,13 +24,7 @@ extension TextField {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(isError ? .red : .clear, lineWidth: 1) // 오류 시 빨간색 테두리
             )
-            .onAppear {
-                if showClearButton {
-                    UITextField.appearance().clearButtonMode = .whileEditing // clear 버튼 활성화
-                } else {
-                    UITextField.appearance().clearButtonMode = .never // clear 버튼 비활성화
-                }
-            }
+            .clearButton(text: text, showClearButton: showClearButton) // clear 버튼
             .onChange(of: text.wrappedValue) {
                 if removeSpaces {
                     // 공백이 포함되었을 경우 공백을 제거
@@ -61,5 +55,34 @@ extension SecureField {
                 // 공백이 포함되었을 경우 공백을 제거
                 text.wrappedValue = text.wrappedValue.replacingOccurrences(of: " ", with: "")
             }
+    }
+}
+
+struct ClearButtonTextField: ViewModifier {
+    @Binding var text: String
+
+    func body(content: Content) -> some View {
+        ZStack(alignment: .trailing) {
+            content
+            if !text.isEmpty {
+                Button {
+                    self.text = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                        .padding(.trailing, 15)
+                }
+            }
+        }
+    }
+}
+
+extension View {
+    func clearButton(text: Binding<String>, showClearButton: Bool) -> some View {
+        if showClearButton {
+            AnyView(self.modifier(ClearButtonTextField(text: text)))
+        } else {
+            AnyView(self)
+        }
     }
 }

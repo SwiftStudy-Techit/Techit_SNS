@@ -17,7 +17,7 @@ struct SignUpCompletedView: View {
                 VStack(spacing: 30) {
                     // SNS 로고
                     Text("SNS")
-                        .font(.custom("Copperplate", size: 80))
+                        .font(.custom("Futura", size: 80))
                         .fontWeight(.bold)
                         .padding(.bottom, 20)
                     

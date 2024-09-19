@@ -22,7 +22,7 @@ struct LoginView: View {
                     
                     // SNS 로고
                     Text("SNS")
-                        .font(.custom("Copperplate", size: 80))
+                        .font(.custom("Futura", size: 80))
                         .fontWeight(.bold)
                     
                     Spacer()
