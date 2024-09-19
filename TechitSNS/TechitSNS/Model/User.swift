@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+
+struct User {
+    //var userUid = UUID()
+    var userUid: String
+    var password: String
+    var profileUrl: String
+    var statusMessage: String
+    var userEmail: String
+    var userId: String
+    //var nickname: String
+}

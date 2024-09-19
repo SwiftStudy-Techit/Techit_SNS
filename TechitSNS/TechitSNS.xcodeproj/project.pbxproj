@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B42DFAF2C9C12AD00DC9ADA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B42DFAE2C9C12AD00DC9ADA /* ProfileViewModel.swift */; };
+		8B42DFB12C9C179600DC9ADA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B42DFB02C9C179600DC9ADA /* ProfileView.swift */; };
 		FB8040192C8F1B2A0098BD6C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8040182C8F1B2A0098BD6C /* User.swift */; };
 		FB80401B2C8F1B310098BD6C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80401A2C8F1B310098BD6C /* Post.swift */; };
 		FB80401E2C8F1BCC0098BD6C /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB80401D2C8F1BCB0098BD6C /* MainTabView.swift */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B42DFAE2C9C12AD00DC9ADA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		8B42DFB02C9C179600DC9ADA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		FB8040182C8F1B2A0098BD6C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FB80401A2C8F1B310098BD6C /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		FB80401D2C8F1BCB0098BD6C /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
@@ -61,6 +65,7 @@
 			children = (
 				FB8040182C8F1B2A0098BD6C /* User.swift */,
 				FB80401A2C8F1B310098BD6C /* Post.swift */,
+				8B42DFAE2C9C12AD00DC9ADA /* ProfileViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -141,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				FB81248C2C8EBA6F00680505 /* ContentView.swift */,
+				8B42DFB02C9C179600DC9ADA /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -228,11 +234,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB8040192C8F1B2A0098BD6C /* User.swift in Sources */,
+				8B42DFB12C9C179600DC9ADA /* ProfileView.swift in Sources */,
 				FB81249C2C8EBCDC00680505 /* AppDelegate.swift in Sources */,
 				FB81248D2C8EBA6F00680505 /* ContentView.swift in Sources */,
 				FB81248B2C8EBA6F00680505 /* TechitSNSApp.swift in Sources */,
 				FB80401B2C8F1B310098BD6C /* Post.swift in Sources */,
 				FB80401E2C8F1BCC0098BD6C /* MainTabView.swift in Sources */,
+				8B42DFAF2C9C12AD00DC9ADA /* ProfileViewModel.swift in Sources */,
 				FB8040202C8F1BF80098BD6C /* MainTabType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
