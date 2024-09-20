@@ -8,13 +8,13 @@
 import Foundation
 
 
-struct User {
-    //var userUid = UUID()
-    var userUid: String
-    var password: String
-    var profileUrl: String
-    var statusMessage: String
+// 로그인과 회원가입에 필요한 데이터
+struct User: Codable {
     var userEmail: String
     var userId: String
-    //var nickname: String
+    var password: String
+    var userName: String
+    var profileUrl: String
+    var statusMessage: String
+    var userUid: String
 }
