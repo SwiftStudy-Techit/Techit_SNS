@@ -62,9 +62,10 @@ struct ProfileView: View {
                 
                 // 게시물 그리드
                 LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-                    ForEach($viewModel.posts, id: \.imageURL) { $post in
+                    ForEach($viewModel.posts, id: \.postId) { $post in
                         VStack {
-                            AsyncImage(url: URL(string: post.imageURL)) { image in
+                            //이미지가 배열이기 때문에 첫장만 프로필 쪽에는 첫장만 보여주면 될 것 같아요.
+                            AsyncImage(url: URL(string: post.imagesUrl[0])) { image in
                                 image.resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 100, height: 100)
@@ -83,8 +84,10 @@ struct ProfileView: View {
             }
             .background(Color("BackgroundColor")) // 배경 색상
             .onAppear {
-                viewModel.fetchUserProfile(userID: userID)
-                viewModel.fetchUserPosts(userID: userID)
+                Task {
+                    try await viewModel.fetchUserProfile(userID: userID)
+                    try await viewModel.fetchUserPosts(userID: userID)
+                }
             }
         }
     }
