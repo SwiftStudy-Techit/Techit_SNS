@@ -47,7 +47,7 @@ struct MainTabView: View {
                 }
                 .tag(MainTabType.post)
             
-            Text("Profile")
+            ProfileView()
                 .tabItem {
                     Label {
                         Text("Profile")
