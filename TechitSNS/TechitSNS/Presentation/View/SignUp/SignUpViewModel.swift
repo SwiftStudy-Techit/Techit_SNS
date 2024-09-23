@@ -62,6 +62,6 @@ class SignUpViewModel {
         ]
         
         // Firestore에 데이터 저장 (users 컬렉션에 UID를 문서 ID로 설정)
-        try await db.collection("users").document(user.userUid).setData(userData)
+        try await db.collection("Users").document(user.userUid).setData(userData)
     }
 }

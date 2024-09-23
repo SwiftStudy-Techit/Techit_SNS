@@ -23,7 +23,7 @@ struct SignUpPasswordView: View {
                     ZStack {
                         if showPassword {
                             TextField("비밀번호를 입력해 주세요.", text: $signUpViewModel.user.password)
-                                .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: false, text: $signUpViewModel.user.password)
+                                .loginTextFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: false, showClearButton: false, text: $signUpViewModel.user.password)
                         } else {
                             SecureField("비밀번호를 입력해 주세요.", text: $signUpViewModel.user.password)
                                 .loginSecureFieldStyle(width: geometry.size.width * 0.9, height: 50, isError: false, text: $signUpViewModel.user.password)
