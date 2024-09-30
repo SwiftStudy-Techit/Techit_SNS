@@ -8,11 +8,10 @@
 import Foundation
 
 
-struct User: Codable {
+struct UserDTO: Codable {
     var userEmail: String
     var userId: String
-    var password: String
-    var userName: String
+w    var userName: String
     var profileUrl: String
     var statusMessage: String
     var userUid: String
