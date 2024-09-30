@@ -10,6 +10,8 @@ import SwiftUI
 struct LoginView: View {
     var signUpViewModel = SignUpViewModel()
     @Bindable var loginViewModel: LoginViewModel
+    @Bindable private var authManager = AuthManager()
+    
     @State private var isShowingAlert = false // 로그인 오류 Alert
     @State private var isShowingSignUpView = false // 회원가입 화면으로 이동하는 상태 변수
     @State private var showPassword = false // 비밀번호 보여주는 상태 변수
@@ -117,6 +119,13 @@ struct LoginView: View {
                         .navigationBarBackButtonHidden(true)
                 }
                 .applyGradientBackground()
+            }
+        }
+        .onAppear {
+            let loginStatus = authManager.checkAutoLogin()
+            if loginStatus.isLoggedIn {
+                loginViewModel.isLoggedIn = true
+                loginViewModel.user.userUid = loginStatus.userUid ?? ""
             }
         }
     }
