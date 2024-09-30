@@ -11,7 +11,7 @@ import Foundation
 struct UserDTO: Codable {
     var userEmail: String
     var userId: String
-w    var userName: String
+    var userName: String
     var profileUrl: String
     var statusMessage: String
     var userUid: String
