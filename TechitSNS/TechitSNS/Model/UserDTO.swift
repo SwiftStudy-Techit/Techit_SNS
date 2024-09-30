@@ -9,12 +9,13 @@ import Foundation
 
 
 // 로그인과 회원가입에 필요한 데이터
-struct User: Codable {
+struct UserDTO: Codable {
     var userEmail: String
     var userId: String
-    var password: String
     var userName: String
     var profileUrl: String
     var statusMessage: String
     var userUid: String
 }
+
+
