@@ -11,11 +11,13 @@ struct MainTabView: View {
     
     //메인 탭뷰 상태를 위한 변수 선언
     @State private var mainTabType: MainTabType = .home
+    @State private var isWritePostView: Bool = false
     
+    @StateObject private var postViewModel: FeedViewModel = .init()
     var body: some View {
         //탭뷰
         TabView(selection: $mainTabType) {
-            Text("Home")
+            FeedView()
                 .tabItem {
                     Label {
                         Text("Home")
@@ -24,16 +26,23 @@ struct MainTabView: View {
                         Image(systemName: mainTabType == .home ? "house.fill" : "house")
                     }
                 }
+                .environmentObject(postViewModel)
                 .tag(MainTabType.home)
             
             
-            Text("Upload")
+            Text("Post")
                 .tabItem {
                     Label {
                         Text("Home")
                     } icon: {
                         //탭뷰가 클릭되었을 때 이미지를 다르게하기 위한 삼항연산자\
                         Image(systemName: mainTabType == .post ? "plus.square" : "plus.square.fill")
+                    }
+                }
+                .onChange(of: mainTabType) { _, newValue in
+                    if newValue == .post {
+                        isWritePostView.toggle()
+                        mainTabType = .home
                     }
                 }
                 .tag(MainTabType.post)
@@ -49,6 +58,14 @@ struct MainTabView: View {
                 }
                 .tag(MainTabType.profile)
             
+        }
+        .fullScreenCover(isPresented: $isWritePostView) {
+            UploadPostView() {
+                isWritePostView.toggle()
+                Task {
+                    await postViewModel.loadFeed()
+                }
+            }
         }
         .tint(.black)
     }

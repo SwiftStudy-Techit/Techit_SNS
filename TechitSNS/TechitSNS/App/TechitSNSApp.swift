@@ -17,7 +17,7 @@ struct TechitSNSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            LoginView(loginViewModel: .init())
         }
     }
 }

@@ -7,16 +7,18 @@
 
 import SwiftUI
 import FirebaseStorage
-import FirebaseAuth
 
 struct ProfileView: View {
     @ObservedObject var viewModel = ProfileViewModel()
-    @State private var userID = "AVHUHoqKLGdFyk4r7hDOOWaBpjq2"
+    
+    var userID: String = ""
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 if let profile = viewModel.userProfile {
+                    
+//                    self.userID = profile.userUid
                     
                     // 사용자 프로필
                     HStack {
@@ -62,7 +64,8 @@ struct ProfileView: View {
                 LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
                     ForEach($viewModel.posts, id: \.postId) { $post in
                         VStack {
-                            AsyncImage(url: URL(string: post.imageURL)) { image in
+                            //이미지가 배열이기 때문에 첫장만 프로필 쪽에는 첫장만 보여주면 될 것 같아요.
+                            AsyncImage(url: URL(string: post.imagesUrl[0])) { image in
                                 image.resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 100, height: 100)
@@ -79,23 +82,13 @@ struct ProfileView: View {
                 }
                 .padding()
             }
-            .background(Color.white) // 배경 색상
+            .background(Color("BackgroundColor")) // 배경 색상
             .onAppear {
-                if let currentUser = Auth.auth().currentUser {
-                    print("Current user UID: \(currentUser.uid)") // 디버깅용 출력
-                    self.userID = currentUser.uid
-                } else {
-                    print("User not logged in, using default userID")
+                Task {
+                    try await viewModel.fetchUserProfile(userID: userID)
+                    try await viewModel.fetchUserPosts(userID: userID)
                 }
-                
-                print("Fetching data for userID: \(userID)") // 디버깅용 출력
-                viewModel.fetchUserProfile(userID: userID)
-                viewModel.fetchUserPosts(userID: userID)
             }
         }
     }
-}
-
-#Preview {
-    ProfileView()
 }

@@ -7,13 +7,13 @@
 
 import Foundation
 
-struct Post: Hashable, Codable{
-//    var id = UUID()
-    var writerUid: String
-    var date: Date
-    var imageURL: String
-    var postId: String
+
+struct Post: Codable {
+    var postId: String = UUID().uuidString
+    var imagesUrl: [String] = []
+    var date: Date = Date()
     var text: String
-    var writerName: String
-    var writerProfileUrl: String
+    var writerUid: String = ""
+    var writerProfileUrl: String = ""
+    var writerName: String = "동경"
 }
