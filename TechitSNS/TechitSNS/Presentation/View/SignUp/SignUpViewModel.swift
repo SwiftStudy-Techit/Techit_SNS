@@ -12,7 +12,7 @@ import Observation
 
 @Observable
 class SignUpViewModel {
-    var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+    var user = UserDTO(userEmail: "", userId: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     
     var isEmailValid: Bool = true // 이메일 형식 검증 상태
     var emailErrorMessage: String? = nil // 이메일 오류 메시지
@@ -32,10 +32,11 @@ class SignUpViewModel {
         }
     }
     
-    func signUp() async throws -> String {
+    // password는 인자로 받기
+    func signUp(password: String) async throws -> String {
         do {
             //회원가입 결과를 기다릴게
-            let result = try await Auth.auth().createUser(withEmail: user.userEmail, password: user.password)
+            let result = try await Auth.auth().createUser(withEmail: user.userEmail, password: password)
             user.userUid = result.user.uid // Firebase Authentication으로부터 UID를 받아옴
             
             // Firestore에 사용자 정보 저장

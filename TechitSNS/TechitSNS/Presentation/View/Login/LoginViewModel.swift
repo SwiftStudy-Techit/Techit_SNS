@@ -11,7 +11,7 @@ import Observation
 
 @Observable
 class LoginViewModel {
-    var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+    var user = UserDTO(userEmail: "", userId: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     var isLoggedIn: Bool = false // 로그인 성공 여부를 나타내는 상태 변수
     var errorMessage: String? // 로그인 에러 메시지를 저장
     private let authManager = AuthManager() // AuthManager 인스턴스 생성
@@ -24,11 +24,11 @@ class LoginViewModel {
         }
     }
     
-    func login() async throws ->  String {
+    func login(password: String) async throws ->  String {
         do {
             // Firebase로 로그인 시도
             // signIn 함수가 완료될 때까지 기다려!
-            let result = try await Auth.auth().signIn(withEmail: user.userEmail, password: user.password)
+            let result = try await Auth.auth().signIn(withEmail: user.userEmail, password: password)
             isLoggedIn = true // 로그인 성공 상태로 변경
             errorMessage = nil // 로그인 성공 시 에러 메시지 초기화
             return result.user.uid //대충 로그인 성공했다는 뜻(uid반환)
@@ -57,6 +57,6 @@ class LoginViewModel {
     func logout() {
         authManager.signOut()
         isLoggedIn = false
-        user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+        user = UserDTO(userEmail: "", userId: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     }
 }
