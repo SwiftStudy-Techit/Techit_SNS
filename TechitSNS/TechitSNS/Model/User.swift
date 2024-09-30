@@ -8,13 +8,14 @@
 import Foundation
 
 
-struct User {
-    //var userUid = UUID()
+struct User: Hashable, Codable{
+//    var id = UUID()
     var userUid: String
-    var password: String
     var profileUrl: String
     var statusMessage: String
     var userEmail: String
     var userId: String
+    var userName: String
     //var nickname: String
 }
+

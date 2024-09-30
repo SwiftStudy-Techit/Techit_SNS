@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Post{
-//    var writerUid = UUID()
+struct Post: Hashable, Codable{
+//    var id = UUID()
     var writerUid: String
-    var date: Date = Date()
+    var date: Date
     var imageURL: String
     var postId: String
     var text: String

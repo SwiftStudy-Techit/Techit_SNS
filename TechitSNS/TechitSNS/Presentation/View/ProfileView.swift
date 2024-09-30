@@ -7,18 +7,16 @@
 
 import SwiftUI
 import FirebaseStorage
+import FirebaseAuth
 
 struct ProfileView: View {
     @ObservedObject var viewModel = ProfileViewModel()
-    
-    var userID: String = ""
+    @State private var userID = "AVHUHoqKLGdFyk4r7hDOOWaBpjq2"
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 if let profile = viewModel.userProfile {
-                    
-//                    self.userID = profile.userUid
                     
                     // 사용자 프로필
                     HStack {
@@ -62,7 +60,7 @@ struct ProfileView: View {
                 
                 // 게시물 그리드
                 LazyVGrid(columns: [GridItem(), GridItem(), GridItem()]) {
-                    ForEach($viewModel.posts, id: \.imageURL) { $post in
+                    ForEach($viewModel.posts, id: \.postId) { $post in
                         VStack {
                             AsyncImage(url: URL(string: post.imageURL)) { image in
                                 image.resizable()
@@ -81,11 +79,23 @@ struct ProfileView: View {
                 }
                 .padding()
             }
-            .background(Color("BackgroundColor")) // 배경 색상
+            .background(Color.white) // 배경 색상
             .onAppear {
+                if let currentUser = Auth.auth().currentUser {
+                    print("Current user UID: \(currentUser.uid)") // 디버깅용 출력
+                    self.userID = currentUser.uid
+                } else {
+                    print("User not logged in, using default userID")
+                }
+                
+                print("Fetching data for userID: \(userID)") // 디버깅용 출력
                 viewModel.fetchUserProfile(userID: userID)
                 viewModel.fetchUserPosts(userID: userID)
             }
         }
     }
+}
+
+#Preview {
+    ProfileView()
 }

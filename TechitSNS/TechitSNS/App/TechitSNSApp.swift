@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import Firebase
 
 @main
 struct TechitSNSApp: App {
+//    init() {
+//        FirebaseApp.configure()
+//    }
     //delegate를 아래 파일로 선언한 AppDelegate로 쓰겠다
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
