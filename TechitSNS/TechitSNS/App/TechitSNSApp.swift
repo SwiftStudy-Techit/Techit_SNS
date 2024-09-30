@@ -14,6 +14,7 @@ struct TechitSNSApp: App {
     var body: some Scene {
         WindowGroup {
             LoginView(loginViewModel: .init())
+                .environment(AuthManager())
         }
     }
 }

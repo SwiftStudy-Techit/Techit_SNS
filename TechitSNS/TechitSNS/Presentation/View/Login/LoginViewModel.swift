@@ -14,6 +14,15 @@ class LoginViewModel {
     var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     var isLoggedIn: Bool = false // 로그인 성공 여부를 나타내는 상태 변수
     var errorMessage: String? // 로그인 에러 메시지를 저장
+    private let authManager = AuthManager() // AuthManager 인스턴스 생성
+    
+    init() {
+        // AuthManager에서 로그인 상태 확인
+        if authManager.isLoggedIn {
+            isLoggedIn = true
+            user.userUid = authManager.currentUser?.uid ?? "" // uid 넘겨주기
+        }
+    }
     
     func login() async throws ->  String {
         do {
@@ -43,5 +52,11 @@ class LoginViewModel {
             }
             throw error
         }
+    }
+    
+    func logout() {
+        authManager.signOut()
+        isLoggedIn = false
+        user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     }
 }
