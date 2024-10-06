@@ -9,41 +9,74 @@ import FirebaseFirestore
 import FirebaseStorage
 import PhotosUI
 import SwiftUI
+import FirebaseAuth
 
+
+enum UploadError: Error {
+    case upLoadImageFailed
+    case loadFailedUserInfo
+    case upLoadPostFailed
+}
+
+enum LoadState {
+    case none
+    case loading
+    case finish
+}
 
 class UploadPostViewModel: ObservableObject {
     
-   
-
+    let db = Firestore.firestore()
+    
     @Published var images: [UIImage] = []     //이미지 배열
     @Published var selectedPhotos: [PhotosPickerItem] = [] //선택된 포토아이템 배열
     @Published var text: String = "" //본문
-    @Published var isLoading: Bool = false //로딩 프로그래스 바
-    @Published var isFinish: Bool = false
+    @Published var isLoadState: LoadState = .none
     var post = Post(text: "")
     
     //글 업로드 버튼 눌렸을 때 호출되는 함수
-    func uploadPost() {
-        self.isLoading = true
-        Task {
+    func uploadPost() async {
+        
+        guard let userUid = Auth.auth().currentUser?.uid else {
+            print("로그인 상태가 아님")
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.isLoadState = .loading
+        }
+        
+        do {
             post.text = self.text
             let imageDatas = convertImageToData()
-            //Post데이터의 imagesUrl데이터에 사진 주소값들이 들어간 배열 넣어줌
             post.imagesUrl = try await uploadImages(imageDatas, postId: post.postId)
+            let writerInfo = try await getUserData(userUid)
+            post.writerName = writerInfo.userName
+            post.writerProfileUrl = writerInfo.profileUrl
+            post.writerUid = userUid
             try await uploadPostData(post)
             
             DispatchQueue.main.async {
-                self.isLoading = false
-                self.isFinish = true
+                self.isLoadState = .finish
             }
             
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     
     //UIImage 배열을 Storage에 업로드 하기 위해 UIImage를 -> Data로 변환하여 반환하는 함수
     func convertImageToData() -> [Data] {
         return self.images.compactMap { uiImage in
-            uiImage.jpegData(compressionQuality: 0.5)
+            uiImage.jpegData(compressionQuality: 0.3)
+        }
+    }
+    
+    func getUserData(_ userUid: String) async throws -> UserDTO2 {
+        do {
+            return try await db.collection("Users").document(userUid).getDocument(as: UserDTO2.self)
+        } catch {
+            throw error
         }
     }
     
@@ -58,34 +91,30 @@ class UploadPostViewModel: ObservableObject {
                 let _ = try await ref.putDataAsync(image)
                 let url = try await ref.downloadURL()
                 imageUrls.append(url.absoluteString)
-                print("\(url.absoluteString)")
             }
+            return imageUrls
         } catch {
-            print("\(error.localizedDescription)")
+            throw UploadError.upLoadImageFailed
         }
-        return imageUrls
     }
     
     
     //파이어스토어에 포스트 데이터 업로드 하는 함수
     func uploadPostData(_ post: Post) async throws {
-        let db = Firestore.firestore()
         do {
             let postEncode = try Firestore.Encoder().encode(post)
             try await db.collection("Post").document(post.postId).setData(postEncode)
         } catch {
-            print("\(error.localizedDescription)")
+            throw UploadError.upLoadPostFailed
         }
     }
-    
-    
     
     
     //PhotosPickerItem을 UIImage로 변환하여 images 배열에 값을 추가하는 함수
     @MainActor
     func convertPickerItemToImage() {
         images.removeAll()
-
+        
         if !selectedPhotos.isEmpty {
             for photo in selectedPhotos {
                 Task {
@@ -98,9 +127,6 @@ class UploadPostViewModel: ObservableObject {
             }
         }
     }
-    
-    
-    
 }
 
 

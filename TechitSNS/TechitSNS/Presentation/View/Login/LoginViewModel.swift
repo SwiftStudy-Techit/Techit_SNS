@@ -57,6 +57,6 @@ class LoginViewModel {
     func logout() {
         authManager.signOut()
         isLoggedIn = false
-        user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+        user = UserDTO(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     }
 }
