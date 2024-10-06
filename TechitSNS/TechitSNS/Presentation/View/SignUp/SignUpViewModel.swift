@@ -12,7 +12,7 @@ import Observation
 
 @Observable
 class SignUpViewModel {
-    var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+    var user = UserDTO(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     
     var isEmailValid: Bool = true // 이메일 형식 검증 상태
     var emailErrorMessage: String? = nil // 이메일 오류 메시지

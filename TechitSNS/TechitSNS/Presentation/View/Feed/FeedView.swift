@@ -22,18 +22,41 @@ struct FeedView: View {
     @State private var direction: SwipeDirection = .none
     @State private var shiftOffset: CGFloat = 0
     
+    @State private var isCommentSheet: Bool = false
+    
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 LazyVStack(spacing: 16) {
                     ForEach(viewModel.feeds, id: \.postId) { feed in
-                        FeedItemView(feed: feed, size: geometry.size.width)
+                        FeedItemView(feed: feed, size: geometry.size.width) {
+                            viewModel.selectedPost = feed
+                            isCommentSheet.toggle()
+                        }
+                        .onAppear {
+                            // 마지막 아이템에 도달했을 때 추가 로드
+                            if feed.postId == viewModel.feeds.last?.postId {
+                                Task {
+                                    await viewModel.loadFeed()
+                                }
+                            }
+                        }
+                    }
+                    if viewModel.isLoading {
+                        ProgressView()
+                            .padding()
+                    }
+                    
+                    // 모든 데이터 로드 완료 시 표시 (옵션)
+                    if viewModel.isEndReached {
+                        Text("모든 피드를 불러왔습니다.")
+                            .foregroundColor(.gray)
+                            .padding()
                     }
                 }
                 .padding(.top, headerHeight)
                 .offsetY { previous, current in
                     if previous > current {
-                        print("up", current)
                         if direction != .up && current < 0 {
                             shiftOffset = current - headerOffset
                             direction = .up
@@ -42,7 +65,6 @@ struct FeedView: View {
                         let offset = current < 0 ? (current - shiftOffset) : 0
                         headerOffset = (-offset < headerHeight ? (offset < 0 ? offset : 0) : -headerHeight)
                     } else {
-                        print("down", current)
                         if direction != .down {
                             shiftOffset = current
                             direction = .down
@@ -54,7 +76,7 @@ struct FeedView: View {
                 }
             }
             .refreshable {
-                await viewModel.loadFeed()
+                viewModel.refreshFeed()
             }
             .task {
                 await viewModel.loadFeed()
@@ -74,6 +96,9 @@ struct FeedView: View {
                         }
                     }
                     .offset(y: -headerOffset < headerHeight ? headerOffset : (headerOffset < 0 ? headerOffset : 0))
+            }
+            .sheet(isPresented: $isCommentSheet) {
+                CommentModalView(viewModel: viewModel)
             }
             .ignoresSafeArea(.all, edges: .top)
         }
@@ -119,24 +144,50 @@ struct FeedItemView: View {
     
     let feed: Post
     let size: CGFloat
+    let commentAction: () -> Void
     
     var body: some View {
-        VStack {
-            //작성자 정보 섹션
+        VStack(spacing: 6) {
+            
             HStack {
                 
-                AsyncImage(url: URL(string: feed.writerProfileUrl)) { image in
-                    image
-                        .resizable()
-                        .frame(width: size / 9, height: size / 9)
-                        .clipShape(Circle())
-                } placeholder: {
-                    ProgressView()
+                AsyncImage(url: URL(string: feed.writerProfileUrl)) { phase in
+                    switch phase {
+                    case .success(let image): //이미지 로드에 성공함
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size / 9, height: size / 9)
+                            .clipShape(Circle())
+                    case .failure: //이미지 로드실패
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size / 9, height: size / 9)
+                            .clipShape(Circle())
+                    case .empty: //?? 비어있음?
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size / 9, height: size / 9)
+                            .clipShape(Circle())
+                    @unknown default: //?디폴트?
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: size / 9, height: size / 9)
+                            .clipShape(Circle())
+                    }
                 }
                 
-                Text(feed.writerName)
-                    .foregroundStyle(.primary)
-                    .bold()
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(feed.writerName)
+                        .foregroundStyle(.primary)
+                        .bold()
+                    Text(feed.date.formattedTimeAgo)
+                        .foregroundStyle(.gray)
+                        .font(.caption)
+                }
                 Spacer()
                 
                 Button {
@@ -144,7 +195,7 @@ struct FeedItemView: View {
                 } label: {
                     Image(systemName: "ellipsis")
                 }
-            }
+            } //사용자 정보 섹션
             .padding(.horizontal, 18)
             .padding(.vertical, 3)
             
@@ -168,11 +219,29 @@ struct FeedItemView: View {
             //본문 섹션
             HStack {
                 Text(feed.text)
+                Spacer()
+            }
+            .padding(.horizontal, 4)
+            .padding(.vertical, 2)
+            
+            
+            //댓글
+            HStack {
+                Button {
+                    commentAction()
+                } label: {
+                    HStack {
+                        Image(systemName: "bubble.left.fill")
+                            .tint(.primary)
+                        Text("\(feed.commentCount)")
+                    }
+                    
+                }
                 
                 Spacer()
             }
             .padding(.horizontal)
-            .padding(.vertical, 2)
+            
             
             //시간섹션
             HStack {

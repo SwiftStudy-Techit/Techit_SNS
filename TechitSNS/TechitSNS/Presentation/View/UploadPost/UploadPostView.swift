@@ -62,8 +62,10 @@ struct UploadPostView: View {
                         .padding()
                     
                     //업로드 버튼
-                    BlueButton(disabled: viewModel.isLoading) {
-                        viewModel.uploadPost()
+                    BlueButton(disabled: viewModel.isLoadState == .loading) {
+                        Task {
+                            await viewModel.uploadPost()
+                        }
                     } content: {
                         Text("업로드")
                             .padding()
@@ -73,13 +75,13 @@ struct UploadPostView: View {
                     Spacer()
                 }
             }
-            .onChange(of: viewModel.isFinish) { _, newValue in
-                if newValue {
+            .onChange(of: viewModel.isLoadState) { _, newValue in
+                if newValue == .finish {
                     finish()
                 }
             }
             .overlay {
-                if viewModel.isLoading {
+                if viewModel.isLoadState == .loading {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .gray)) // 흰색
                         .scaleEffect(1.5) // 크기 조절

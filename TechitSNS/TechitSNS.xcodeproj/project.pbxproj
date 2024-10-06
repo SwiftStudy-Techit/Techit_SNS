@@ -44,6 +44,8 @@
 		FBA2E5D52C917EB000421657 /* UploadPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2E5D42C917EB000421657 /* UploadPostViewModel.swift */; };
 		FBA2E5D82C918DC900421657 /* ImagePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2E5D72C918DC900421657 /* ImagePageView.swift */; };
 		FBA2E5DA2C9199FE00421657 /* BlueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBA2E5D92C9199FE00421657 /* BlueButton.swift */; };
+		FBCCEA402CB19597005FB36D /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCEA3F2CB19597005FB36D /* Comment.swift */; };
+		FBCCEA432CB1976A005FB36D /* CommentModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBCCEA422CB1976A005FB36D /* CommentModalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +81,8 @@
 		FBA2E5D42C917EB000421657 /* UploadPostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPostViewModel.swift; sourceTree = "<group>"; };
 		FBA2E5D72C918DC900421657 /* ImagePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageView.swift; sourceTree = "<group>"; };
 		FBA2E5D92C9199FE00421657 /* BlueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueButton.swift; sourceTree = "<group>"; };
+		FBCCEA3F2CB19597005FB36D /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		FBCCEA422CB1976A005FB36D /* CommentModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +132,7 @@
 			children = (
 				FB519E682C9AC2330068C98A /* FeedView.swift */,
 				FB519E6A2C9AC8750068C98A /* FeedViewModel.swift */,
+				FBCCEA422CB1976A005FB36D /* CommentModalView.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				FB8040182C8F1B2A0098BD6C /* UserDTO.swift */,
 				FB80401A2C8F1B310098BD6C /* Post.swift */,
 				8B42DFAE2C9C12AD00DC9ADA /* ProfileViewModel.swift */,
+				FBCCEA3F2CB19597005FB36D /* Comment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -349,6 +355,7 @@
 				FBA2E5D52C917EB000421657 /* UploadPostViewModel.swift in Sources */,
 				FB81248D2C8EBA6F00680505 /* ContentView.swift in Sources */,
 				FB519E692C9AC2330068C98A /* FeedView.swift in Sources */,
+				FBCCEA402CB19597005FB36D /* Comment.swift in Sources */,
 				97E1E0222C9849FC00D2AC72 /* SignUpIDView.swift in Sources */,
 				FB81248B2C8EBA6F00680505 /* TechitSNSApp.swift in Sources */,
 				97E1E01E2C98446B00D2AC72 /* SignUpEmailView.swift in Sources */,
@@ -359,6 +366,7 @@
 				97E1E0282C986C2200D2AC72 /* SignUpNameView.swift in Sources */,
 				97225B302C9AB93000A38FA6 /* LoginViewModel.swift in Sources */,
 				FB80401E2C8F1BCC0098BD6C /* MainTabView.swift in Sources */,
+				FBCCEA432CB1976A005FB36D /* CommentModalView.swift in Sources */,
 				8B42DFAF2C9C12AD00DC9ADA /* ProfileViewModel.swift in Sources */,
 				97E1E0182C98310900D2AC72 /* LoginView.swift in Sources */,
 				97E1E01A2C98391000D2AC72 /* Field+Extension.swift in Sources */,

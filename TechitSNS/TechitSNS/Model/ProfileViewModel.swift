@@ -10,7 +10,7 @@ import FirebaseStorage
 import SwiftUI
 
 class ProfileViewModel: ObservableObject {
-    @Published var userProfile: User?
+    @Published var userProfile: UserDTO?
     @Published var posts: [Post] = []
     
     private let db = Firestore.firestore()

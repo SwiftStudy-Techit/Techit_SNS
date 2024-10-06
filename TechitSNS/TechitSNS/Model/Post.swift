@@ -15,5 +15,6 @@ struct Post: Codable {
     var text: String
     var writerUid: String = ""
     var writerProfileUrl: String = ""
-    var writerName: String = "동경"
+    var writerName: String = ""
+    var commentCount: Int = 0
 }

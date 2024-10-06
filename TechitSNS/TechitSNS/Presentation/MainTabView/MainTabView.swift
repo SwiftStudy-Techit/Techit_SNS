@@ -62,9 +62,7 @@ struct MainTabView: View {
         .fullScreenCover(isPresented: $isWritePostView) {
             UploadPostView() {
                 isWritePostView.toggle()
-                Task {
-                    await postViewModel.loadFeed()
-                }
+                postViewModel.refreshFeed()
             }
         }
         .tint(.black)

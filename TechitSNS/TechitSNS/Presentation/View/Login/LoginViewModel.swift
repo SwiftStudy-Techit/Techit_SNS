@@ -11,7 +11,7 @@ import Observation
 
 @Observable
 class LoginViewModel {
-    var user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+    var user = UserDTO(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     var isLoggedIn: Bool = false // 로그인 성공 여부를 나타내는 상태 변수
     var errorMessage: String? // 로그인 에러 메시지를 저장
     private let authManager = AuthManager() // AuthManager 인스턴스 생성
@@ -57,6 +57,6 @@ class LoginViewModel {
     func logout() {
         authManager.signOut()
         isLoggedIn = false
-        user = User(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
+        user = UserDTO(userEmail: "", userId: "", password: "", userName: "", profileUrl: "", statusMessage: "", userUid: "")
     }
 }
