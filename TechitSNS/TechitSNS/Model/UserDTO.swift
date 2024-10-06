@@ -8,6 +8,7 @@
 import Foundation
 
 
+
 // 로그인과 회원가입에 필요한 데이터
 struct UserDTO: Codable {
     var userEmail: String

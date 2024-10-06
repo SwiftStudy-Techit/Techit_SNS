@@ -8,7 +8,6 @@
 import Foundation
 
 
-
 struct Post: Codable {
     var postId: String = UUID().uuidString
     var imagesUrl: [String] = []
